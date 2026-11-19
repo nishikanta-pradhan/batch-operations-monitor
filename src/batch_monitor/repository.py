@@ -42,7 +42,7 @@ class MonitorRepository:
             )
 
     def get_job(self, job_name: str) -> JobDefinition | None:
-        with self.database.connect() as connection:
+        with self.database.connection() as connection:
             row = connection.execute(
                 "SELECT * FROM jobs WHERE job_name = ?",
                 (job_name.strip().upper(),),
@@ -56,7 +56,7 @@ class MonitorRepository:
             query += " WHERE enabled = ?"
             parameters = (1,)
         query += " ORDER BY job_name"
-        with self.database.connect() as connection:
+        with self.database.connection() as connection:
             rows = connection.execute(query, parameters).fetchall()
         return [self._job_from_row(row) for row in rows]
 
@@ -94,7 +94,7 @@ class MonitorRepository:
     def latest_execution(
         self, job_name: str, business_date: date
     ) -> ExecutionRecord | None:
-        with self.database.connect() as connection:
+        with self.database.connection() as connection:
             row = connection.execute(
                 """
                 SELECT * FROM executions
@@ -109,7 +109,7 @@ class MonitorRepository:
     def history(self, job_name: str, limit: int = 20) -> list[ExecutionRecord]:
         if limit <= 0:
             return []
-        with self.database.connect() as connection:
+        with self.database.connection() as connection:
             rows = connection.execute(
                 """
                 SELECT * FROM executions

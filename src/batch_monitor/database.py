@@ -54,6 +54,21 @@ class Database:
         return connection
 
     @contextmanager
+    def connection(self) -> Iterator[sqlite3.Connection]:
+        """Yield a read connection and always release its file handle.
+
+        The sqlite3 connection context manager commits or rolls back but does
+        not close the connection. Explicit closure is required on Windows,
+        where an open SQLite handle prevents temporary databases from being
+        deleted after a test.
+        """
+        connection = self.connect()
+        try:
+            yield connection
+        finally:
+            connection.close()
+
+    @contextmanager
     def transaction(self) -> Iterator[sqlite3.Connection]:
         connection = self.connect()
         try:
