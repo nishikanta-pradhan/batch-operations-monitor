@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "batch-operations-monitor"
+version = "0.1.0"
+description = "A local CLI for tracking enterprise batch executions and SLA health"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Nishikanta Pradhan"}]
+dependencies = []
+
+[project.scripts]
+batch-monitor = "batch_monitor.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

@@ -1,0 +1,8 @@
+job_name,owner,schedule_time,sla_time,expected_duration_minutes,criticality,enabled
+CUSTOMER_IMPORT,Data Operations,00:30,01:30,40,high,true
+INVOICE_BUILD,Billing Operations,01:30,03:00,60,critical,true
+NOTIFICATION_EXPORT,Integration Support,02:00,03:30,45,medium,true
+DAILY_REPORT,Reporting,03:00,04:00,30,medium,true
+ARCHIVE_CLEANUP,Platform Operations,04:00,05:00,30,low,true
+LEGACY_EXTRACT,Data Operations,02:30,04:30,90,low,false
+
